@@ -1,70 +1,97 @@
 import datetime
-
+import random
+import time
 def write_logs(message):
-    with open(r"C:/atm/history/app.log",'a') as file:
+    with open(r"C:/updated/atm/app.log",'a') as file:
         file.write(message+'\n')
-
 def atm_system():
+        money=5000
 
-        print('==================welcome to mini atm bank====================')
-        print("""
-        ENTER THE OPTION YOU WANT
-        1)DEPOSIT
-        2)WITHDRAWL
-        3)CHECK BALANCE
-        4) EXIT""")
-        write_logs('APP STARTED')
-        write_logs(str(datetime.datetime.now()))
-        while True:
+        Pin_number=random.randint(1000,9999)
+        print(Pin_number)
+        for i in range(3,0,-1):
             try:
-                choice=int(input("enter the option you want.."))
-                money=5000
-                def deposit_money():
-                    user=int(input("enter the money you want to deposit"))
-                    if user<0:
-                        print('deposit cant be negative')
-                        quit()
-                    else:
-                        deposit=money + user
-                        print('YOUR TOTAL AMOUNT IS:-',deposit)
-                        write_logs(str(datetime.datetime.now()))
-                        write_logs('DEPOSIT PROCESS COMPLETED')
-
-                def withdrawl_money():
-                    print('please enter how much money you want to withdrawl')
-                    user1=int(input('enter the money'))
-                    if money<user1:
-                        print('insufficient balance')
-                        write_logs(str(datetime.datetime.now()))
-                        write_logs('INSUFFICIENT BALANCE')
-                    else:
-                        withdrawl= money- user1
-                        print('YOUR TOTAL BALANCE IS:-',withdrawl)
-                        write_logs(str(datetime.datetime.now()))
-                        write_logs('WITHDRAWL PROCESS COMPLETED')
-                 
-                def check_balance():
-                    print('loading...')
-                    print('YOUR BALANCE IS:-',money)
-                    write_logs(str(datetime.datetime.now()))
-                    write_logs('BALANCE HAS BEEN CHECKED BY THE USER')
-
-                def exit_program():
-                    print('thanks for choosing this bank')
-                    write_logs(str(datetime.datetime.now()))
-                    write_logs('LOGGED OUT')
-                    quit()                  
+                verify=int(input("enter the pin number.."))
             except ValueError:
-                print('invalid value try again')
-            if choice==1:
-                deposit_money()
-            elif choice==2:
-                withdrawl_money()
-            elif choice==3:
-                check_balance()
-            elif choice==4:
-                exit_program()
+                print("please type pin number correctly")
+            if verify==Pin_number:
+                print("correct")
+                write_logs("USERS LOGINED...")
+                write_logs(str(datetime.datetime.now()))
+                time.sleep(2)
+                print('================== WELCOME TO MINI ATM BANK====================')
+                print("""
+                    ENTER THE OPTION YOU WANT
+                    1)DEPOSIT
+                    2)WITHDRAWL
+                    3)CHECK BALANCE
+                    4) EXIT""")
+                try:
+                    while True:
+                        try:
+                            choice=int(input("enter the choice"))
+                            if choice==1:
+                                write_logs('user selected deposit processs')
+                                write_logs(str(datetime.datetime.now()))
+                                try:
+                                    user=int(input("enter the amount you want to deposit"))
+                                    print('please enter the deposit number')
+                                    if user<=0:
+                                        print("negative numbers cant be deposited..")
+                                        break
+                                    money=user+money
+                                    print("deposit process completed")
+                                    time.sleep(2)
+                                    print("UR CURRENT BALANCE IS",money)
+                                    write_logs('deposit process completed')
+                                    write_logs(str(datetime.datetime.now()))
+                                except ValueError:
+                                     print("invalid amount has been typed")
+                            elif choice==2:
+                                    write_logs('user selected withdrawl process')
+                                    write_logs(str(datetime.datetime.now()))
+                                    print("opening users bank deatils")
+                                    time.sleep(2)
+                                    try:
+                                        user1=int(input("enter the money you want to withdrawl"))
+                                        print("please enter the withdrawl amount")
+                                        if user1>money or user1<0:
+                                            print("NO SUCH ACTIONS ARE POSSIBLE")
+                                            break
+                                        money=money - user1
+                                        print("withdrawl process completed")
+                                        time.sleep(2)
+                                        print("ur current balance is ",money)
+                                        write_logs("withdrawl process completed")
+                                        write_logs(str(datetime.datetime.now()))
+                                    except ValueError:
+                                        print("invalid withdrawl amount has been typed")
+                            elif choice==3:
+                                    write_logs('user selected current balance')
+                                    write_logs(str(datetime.datetime.now()))
+                                    time.sleep(2)
+                                    print("loading users bank details")
+                                    time.sleep(2)
+                                    print("UR CURRENT BALANCE IS",money)
+                                    write_logs("user checked his bank balance")
+                                    write_logs(str(datetime.datetime.now()))
+                            elif choice==4:
+                                    print("thank you for choosing our bank")
+                                    write_logs("user left the app")
+                                    write_logs(str(datetime.datetime.now()))
+                                    exit()
+                            else:
+                                print("invalid pin")
+                        except ValueError:
+                                print("please enter the correct choice")
+                except ValueError:
+                    print("invalid choice")
             else:
-                print("invalid choice try again..")
-
+                print("invalid pin number try again")
+                i-=1
+                print("u have this many attempts left",i)
+                if i==3:
+                     print("attempts finished",i)
+                     break
+                
 atm_system()
