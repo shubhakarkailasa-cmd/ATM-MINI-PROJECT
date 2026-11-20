@@ -1,12 +1,11 @@
 import datetime
 import random
 import time
-def write_logs(message):
+def write_logs(message,time):
     with open(r"C:/updated/atm/app.log",'a') as file:
-        file.write(message+'\n')
+        file.write(message+" "+time+'\n')
 def atm_system():
         money=5000
-
         Pin_number=random.randint(1000,9999)
         print(Pin_number)
         for i in range(3,0,-1):
@@ -16,8 +15,7 @@ def atm_system():
                 print("please type pin number correctly")
             if verify==Pin_number:
                 print("correct")
-                write_logs("USERS LOGINED...")
-                write_logs(str(datetime.datetime.now()))
+                write_logs("USERS LOGINED...",str(datetime.datetime.now()))
                 time.sleep(2)
                 print('================== WELCOME TO MINI ATM BANK====================')
                 print("""
@@ -25,14 +23,15 @@ def atm_system():
                     1)DEPOSIT
                     2)WITHDRAWL
                     3)CHECK BALANCE
-                    4) EXIT""")
+                    4) EXIT
+                    5) CHANGE PIN
+                    """)
                 try:
                     while True:
                         try:
                             choice=int(input("enter the choice"))
                             if choice==1:
-                                write_logs('user selected deposit processs')
-                                write_logs(str(datetime.datetime.now()))
+                                write_logs('user selected deposit processs',str(datetime.datetime.now()))
                                 try:
                                     user=int(input("enter the amount you want to deposit"))
                                     print('please enter the deposit number')
@@ -43,13 +42,11 @@ def atm_system():
                                     print("deposit process completed")
                                     time.sleep(2)
                                     print("UR CURRENT BALANCE IS",money)
-                                    write_logs('deposit process completed')
-                                    write_logs(str(datetime.datetime.now()))
+                                    write_logs('deposit process completed',str(datetime.datetime.now()))
                                 except ValueError:
                                      print("invalid amount has been typed")
                             elif choice==2:
-                                    write_logs('user selected withdrawl process')
-                                    write_logs(str(datetime.datetime.now()))
+                                    write_logs('user selected withdrawl process',str(datetime.datetime.now()))
                                     print("opening users bank deatils")
                                     time.sleep(2)
                                     try:
@@ -62,24 +59,31 @@ def atm_system():
                                         print("withdrawl process completed")
                                         time.sleep(2)
                                         print("ur current balance is ",money)
-                                        write_logs("withdrawl process completed")
-                                        write_logs(str(datetime.datetime.now()))
+                                        write_logs("withdrawl process completed",str(datetime.datetime.now()))
                                     except ValueError:
                                         print("invalid withdrawl amount has been typed")
                             elif choice==3:
-                                    write_logs('user selected current balance')
-                                    write_logs(str(datetime.datetime.now()))
+                                    write_logs('user selected current balance',str(datetime.datetime.now()))
                                     time.sleep(2)
                                     print("loading users bank details")
                                     time.sleep(2)
                                     print("UR CURRENT BALANCE IS",money)
-                                    write_logs("user checked his bank balance")
-                                    write_logs(str(datetime.datetime.now()))
+                                    write_logs("user checked his bank balance",str(datetime.datetime.now()))
                             elif choice==4:
                                     print("thank you for choosing our bank")
-                                    write_logs("user left the app")
-                                    write_logs(str(datetime.datetime.now()))
+                                    write_logs("user left the app",str(datetime.datetime.now()))
                                     exit()
+                            elif choice==5:
+                                print("loading..")
+                                time.sleep(2)
+                                verify=input("enter the current pin")
+                                if Pin_number==int(verify):
+                                    print("correct")
+                                    New_pin=input("enter the new pin number.")
+                                    if len(New_pin)==4 and New_pin!=Pin_number:
+                                        print('pin number has been saved',New_pin)
+                                else:
+                                    print("incorrect pin! try again")     
                             else:
                                 print("invalid pin")
                         except ValueError:
@@ -92,6 +96,5 @@ def atm_system():
                 print("u have this many attempts left",i)
                 if i==3:
                      print("attempts finished",i)
-                     break
-                
+                     break               
 atm_system()
